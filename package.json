@@ -1,0 +1,23 @@
+{
+  "name": "image-processor",
+  "version": "1.0.0",
+  "description": "简单的图片处理工具，用于调整图片尺寸和大小",
+  "main": "app.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "predeploy": "npm run build",
+    "deploy": "cp -r index.html style.css _headers _redirects dist/"
+  },
+  "keywords": [
+    "image",
+    "processing",
+    "resize",
+    "compress"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+} 
