@@ -8,7 +8,7 @@
     "watch": "tsc --watch",
     "clean": "rm -rf public/* || true",
     "predeploy": "npm run build && npm run clean",
-    "deploy": "cp index.html style.css _headers _redirects public/ && cp dist/app.js public/"
+    "deploy": "cp index.html style.css _headers _redirects _routes.json public/ && cp dist/app.js public/main.v1.js && sed -i '' 's/app.js/main.v1.js/g' public/index.html"
   },
   "keywords": [
     "image",

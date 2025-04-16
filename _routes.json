@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [],
+  "routes": [
+    {
+      "pattern": "/*.js",
+      "content_type": "application/javascript"
+    }
+  ]
+} 
