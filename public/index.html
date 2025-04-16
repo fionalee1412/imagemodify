@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片处理工具</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>图片处理工具</h1>
+        
+        <div class="upload-section">
+            <input type="file" id="imageInput" accept="image/*">
+            <p>选择一张图片进行处理</p>
+        </div>
+        
+        <div class="image-settings" id="imageSettings" style="display: none;">
+            <div class="preview-container">
+                <div class="original-preview">
+                    <h3>原始图片</h3>
+                    <img id="originalImage" alt="原始图片">
+                    <div id="originalInfo" class="image-info"></div>
+                </div>
+                <div class="processed-preview">
+                    <h3>处理后图片</h3>
+                    <img id="processedImage" alt="处理后图片">
+                    <div id="processedInfo" class="image-info"></div>
+                </div>
+            </div>
+            
+            <div class="settings-panel">
+                <h3>调整设置</h3>
+                
+                <div class="setting-group">
+                    <label for="widthInput">宽度 (像素):</label>
+                    <input type="number" id="widthInput" min="1">
+                </div>
+                
+                <div class="setting-group">
+                    <label for="heightInput">高度 (像素):</label>
+                    <input type="number" id="heightInput" min="1">
+                </div>
+                
+                <div class="setting-group">
+                    <label for="keepAspectRatio">保持宽高比:</label>
+                    <input type="checkbox" id="keepAspectRatio" checked>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="qualityInput">图片质量 (1-100):</label>
+                    <input type="range" id="qualityInput" min="1" max="100" value="80">
+                    <span id="qualityValue">80</span>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="formatSelect">输出格式:</label>
+                    <select id="formatSelect">
+                        <option value="image/jpeg">JPEG</option>
+                        <option value="image/png">PNG</option>
+                        <option value="image/webp">WebP</option>
+                    </select>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="targetSizeInput">目标文件大小 (MB):</label>
+                    <input type="number" id="targetSizeInput" min="0.1" step="0.1">
+                </div>
+                
+                <button id="processBtn">处理图片</button>
+                <button id="downloadBtn" disabled>下载图片</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html> 

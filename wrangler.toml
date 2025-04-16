@@ -1,6 +1,6 @@
 [build]
 command = "npm run deploy"
-publish = "dist"
+publish = "public"
 
 [site]
-bucket = "./dist" 
+bucket = "./public" 

@@ -6,8 +6,9 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "predeploy": "npm run build",
-    "deploy": "cp -r index.html style.css _headers _redirects dist/"
+    "clean": "rm -rf public/* || true",
+    "predeploy": "npm run build && npm run clean",
+    "deploy": "cp index.html style.css _headers _redirects public/ && cp dist/app.js public/"
   },
   "keywords": [
     "image",
