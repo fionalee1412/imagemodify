@@ -3,4 +3,7 @@ command = "npm run deploy"
 publish = "public"
 
 [site]
-bucket = "./public" 
+bucket = "./public"
+
+[pages_build_output_dir]
+value = "public" 
