@@ -22,6 +22,7 @@ class ImageProcessor {
     private processedImageEl: HTMLImageElement;
     private originalInfoEl: HTMLDivElement;
     private processedInfoEl: HTMLDivElement;
+    private presetSizeSelect: HTMLSelectElement;
     private widthInput: HTMLInputElement;
     private heightInput: HTMLInputElement;
     private keepAspectRatio: HTMLInputElement;
@@ -40,6 +41,7 @@ class ImageProcessor {
         this.processedImageEl = document.getElementById('processedImage') as HTMLImageElement;
         this.originalInfoEl = document.getElementById('originalInfo') as HTMLDivElement;
         this.processedInfoEl = document.getElementById('processedInfo') as HTMLDivElement;
+        this.presetSizeSelect = document.getElementById('presetSizeSelect') as HTMLSelectElement;
         this.widthInput = document.getElementById('widthInput') as HTMLInputElement;
         this.heightInput = document.getElementById('heightInput') as HTMLInputElement;
         this.keepAspectRatio = document.getElementById('keepAspectRatio') as HTMLInputElement;
@@ -60,6 +62,7 @@ class ImageProcessor {
      */
     private initEventListeners(): void {
         this.imageInput.addEventListener('change', this.handleImageUpload.bind(this));
+        this.presetSizeSelect.addEventListener('change', this.handlePresetSizeChange.bind(this));
         this.widthInput.addEventListener('input', this.handleDimensionChange.bind(this, 'width'));
         this.heightInput.addEventListener('input', this.handleDimensionChange.bind(this, 'height'));
         this.qualityInput.addEventListener('input', this.updateQualityValue.bind(this));
@@ -109,6 +112,7 @@ class ImageProcessor {
             // 设置默认处理参数
             this.widthInput.value = this.originalImage.width.toString();
             this.heightInput.value = this.originalImage.height.toString();
+            this.presetSizeSelect.value = 'custom';
             
             // 显示设置面板
             this.imageSettings.style.display = 'block';
@@ -123,6 +127,30 @@ class ImageProcessor {
         } catch (error) {
             console.error('加载图片时出错:', error);
             alert('加载图片时出错');
+        }
+    }
+    
+    /**
+     * 处理预设尺寸选择变化
+     */
+    private handlePresetSizeChange(): void {
+        const selectedValue = this.presetSizeSelect.value;
+        
+        // 尺寸映射表
+        const sizeMappings: {[key: string]: {width: number, height: number}} = {
+            'oneinch': {width: 295, height: 413},
+            'twoinch': {width: 413, height: 579},
+            'smallone': {width: 260, height: 378},
+            'passport': {width: 354, height: 472},
+            'visa': {width: 390, height: 567},
+            'idcard': {width: 358, height: 441}
+        };
+        
+        // 如果选择了预设尺寸，则更新宽度和高度
+        if (selectedValue !== 'custom' && sizeMappings[selectedValue]) {
+            const size = sizeMappings[selectedValue];
+            this.widthInput.value = size.width.toString();
+            this.heightInput.value = size.height.toString();
         }
     }
     
