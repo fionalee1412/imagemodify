@@ -35,6 +35,15 @@ class ImageProcessor {
         this.processBtn = document.getElementById('processBtn');
         this.downloadBtn = document.getElementById('downloadBtn');
         this.imageSettings = document.getElementById('imageSettings');
+        // 检查DOM元素是否获取成功
+        if (!this.presetSizeSelect) {
+            alert('无法获取预设尺寸选择元素！');
+            console.error('无法获取预设尺寸选择元素！');
+        }
+        else {
+            alert('成功获取预设尺寸选择元素');
+            console.log('预设尺寸选择元素:', this.presetSizeSelect);
+        }
         // 初始化事件监听
         this.initEventListeners();
     }
@@ -106,6 +115,7 @@ class ImageProcessor {
     handlePresetSizeChange() {
         const selectedValue = this.presetSizeSelect.value;
         console.log('预设尺寸变化:', selectedValue);
+        alert('预设尺寸变化: ' + selectedValue);
         // 尺寸映射表
         const sizeMappings = {
             'oneinch': { width: 295, height: 413 },
@@ -121,6 +131,7 @@ class ImageProcessor {
             console.log('设置尺寸为:', size.width, 'x', size.height);
             this.widthInput.value = size.width.toString();
             this.heightInput.value = size.height.toString();
+            alert('设置尺寸为: ' + size.width + ' x ' + size.height);
             // 手动触发输入事件，以便应用宽高比例的变化
             const inputEvent = new Event('input', { bubbles: true });
             this.widthInput.dispatchEvent(inputEvent);

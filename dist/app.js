@@ -24,6 +24,7 @@ class ImageProcessor {
         this.processedImageEl = document.getElementById('processedImage');
         this.originalInfoEl = document.getElementById('originalInfo');
         this.processedInfoEl = document.getElementById('processedInfo');
+        this.presetSizeSelect = document.getElementById('presetSizeSelect');
         this.widthInput = document.getElementById('widthInput');
         this.heightInput = document.getElementById('heightInput');
         this.keepAspectRatio = document.getElementById('keepAspectRatio');
@@ -34,6 +35,15 @@ class ImageProcessor {
         this.processBtn = document.getElementById('processBtn');
         this.downloadBtn = document.getElementById('downloadBtn');
         this.imageSettings = document.getElementById('imageSettings');
+        // 检查DOM元素是否获取成功
+        if (!this.presetSizeSelect) {
+            alert('无法获取预设尺寸选择元素！');
+            console.error('无法获取预设尺寸选择元素！');
+        }
+        else {
+            alert('成功获取预设尺寸选择元素');
+            console.log('预设尺寸选择元素:', this.presetSizeSelect);
+        }
         // 初始化事件监听
         this.initEventListeners();
     }
@@ -42,6 +52,7 @@ class ImageProcessor {
      */
     initEventListeners() {
         this.imageInput.addEventListener('change', this.handleImageUpload.bind(this));
+        this.presetSizeSelect.addEventListener('change', this.handlePresetSizeChange.bind(this));
         this.widthInput.addEventListener('input', this.handleDimensionChange.bind(this, 'width'));
         this.heightInput.addEventListener('input', this.handleDimensionChange.bind(this, 'height'));
         this.qualityInput.addEventListener('input', this.updateQualityValue.bind(this));
@@ -82,6 +93,7 @@ class ImageProcessor {
                 // 设置默认处理参数
                 this.widthInput.value = this.originalImage.width.toString();
                 this.heightInput.value = this.originalImage.height.toString();
+                this.presetSizeSelect.value = 'custom';
                 // 显示设置面板
                 this.imageSettings.style.display = 'block';
                 // 优先选择与原图相同的格式
@@ -96,6 +108,34 @@ class ImageProcessor {
                 alert('加载图片时出错');
             }
         });
+    }
+    /**
+     * 处理预设尺寸选择变化
+     */
+    handlePresetSizeChange() {
+        const selectedValue = this.presetSizeSelect.value;
+        console.log('预设尺寸变化:', selectedValue);
+        alert('预设尺寸变化: ' + selectedValue);
+        // 尺寸映射表
+        const sizeMappings = {
+            'oneinch': { width: 295, height: 413 },
+            'twoinch': { width: 413, height: 579 },
+            'smallone': { width: 260, height: 378 },
+            'passport': { width: 354, height: 472 },
+            'visa': { width: 390, height: 567 },
+            'idcard': { width: 358, height: 441 }
+        };
+        // 如果选择了预设尺寸，则更新宽度和高度
+        if (selectedValue !== 'custom' && sizeMappings[selectedValue]) {
+            const size = sizeMappings[selectedValue];
+            console.log('设置尺寸为:', size.width, 'x', size.height);
+            this.widthInput.value = size.width.toString();
+            this.heightInput.value = size.height.toString();
+            alert('设置尺寸为: ' + size.width + ' x ' + size.height);
+            // 手动触发输入事件，以便应用宽高比例的变化
+            const inputEvent = new Event('input', { bubbles: true });
+            this.widthInput.dispatchEvent(inputEvent);
+        }
     }
     /**
      * 处理尺寸变化，保持宽高比
