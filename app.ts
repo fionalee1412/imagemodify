@@ -135,6 +135,7 @@ class ImageProcessor {
      */
     private handlePresetSizeChange(): void {
         const selectedValue = this.presetSizeSelect.value;
+        console.log('预设尺寸变化:', selectedValue);
         
         // 尺寸映射表
         const sizeMappings: {[key: string]: {width: number, height: number}} = {
@@ -149,8 +150,13 @@ class ImageProcessor {
         // 如果选择了预设尺寸，则更新宽度和高度
         if (selectedValue !== 'custom' && sizeMappings[selectedValue]) {
             const size = sizeMappings[selectedValue];
+            console.log('设置尺寸为:', size.width, 'x', size.height);
             this.widthInput.value = size.width.toString();
             this.heightInput.value = size.height.toString();
+            
+            // 手动触发输入事件，以便应用宽高比例的变化
+            const inputEvent = new Event('input', { bubbles: true });
+            this.widthInput.dispatchEvent(inputEvent);
         }
     }
     
